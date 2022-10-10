@@ -6,6 +6,14 @@ PREVIOUS_HEAD=`git rev-parse --short HEAD@{1} -1`
 FILE_LIST=`git diff --name-only $COMMIT_ID`
 
 # Simplify that list to just the folders
-AFFECTED_FOLDERS= `echo $FILE_LIST | awk -F'/' 'NF!=1{print $1}' | sort -u`
+AFFECTED_FOLDERS= `echo "$FILE_LIST" | awk -F'/' 'NF!=1{print $1}' | sort -u`
 
 echo $AFFECTED_FOLDERS
+
+project="first_folder"
+if [[ $AFFECTED_FOLDERS == *"$project"* ]];
+then
+    echo "The $project directory has changed."
+else
+    echo "The $project directory has no detected changes."
+fi
